@@ -1,0 +1,10 @@
+{  
+	"messageType": "label_config", 
+	"wildcards" : {
+		"human_.*":"#0000FFFF",
+		"human_Original.*":"#FFFF00FF",
+		"chatGPT_.*":"#FF0000FF",
+		"chatGPT_Original.*":"#00FF00FF"
+	},
+	"clearAll" : "false" 
+}
