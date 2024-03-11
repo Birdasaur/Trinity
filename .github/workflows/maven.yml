@@ -51,9 +51,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-${{ runner.arch }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-maven-
+            ${{ runner.os }}-${{ runner.arch }}-maven-
 
       - name: Maven Build Jar
         run: mvn -V -B -e -ff -ntp clean package -Passembly
@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-jar
+          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-${{ runner.arch }}-jar
           path: target/*-assembly.jar
           retention-days: 10
           if-no-files-found: error
@@ -79,8 +79,9 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-          - macos-13 # Intel OSX (Not Supported)
           - macos-14 # ARM64 OSX
+          #- macos-13 # Intel OSX (TODO Not Supported)
+
 
     steps:
 
@@ -114,19 +115,18 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          key: ${{ runner.os }}-${{ runner.arch }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-maven-
+            ${{ runner.os }}-${{ runner.arch }}-maven-
 
       - name: Maven Build Graal VM
-        continue-on-error: true
         run: mvn -V -B -e -ff -ntp clean gluonfx:compile gluonfx:link
 
       - name: Upload Native
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-graal
+          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-${{ runner.arch }}-graal
           path: target/gluonfx/**/trinity*
           retention-days: 10
           if-no-files-found: error

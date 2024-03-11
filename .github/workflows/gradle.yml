@@ -57,7 +57,7 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-jar
+          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-${{ runner.arch }}-jar
           path: build/libs/*-fx.jar
           retention-days: 10
           if-no-files-found: error
@@ -67,7 +67,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          RELEASE_NAME: trinity-${{ runner.os }}-java-${{ matrix.jdk-version }}
+          RELEASE_NAME: trinity-${{ runner.os }}-${{ runner.arch }}-java-${{ matrix.jdk-version }}
         shell: bash
         run: |
           mv build/libs/*-no-fx.jar "$RELEASE_NAME-slim.jar"
@@ -120,7 +120,7 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-jlink-zip
+          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-${{ runner.arch }}-jlink-zip
           path: build/image/**
           retention-days: 10
           if-no-files-found: error
@@ -130,7 +130,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          RELEASE_NAME: trinity-${{ runner.os }}-java-${{ matrix.jdk-version }}
+          RELEASE_NAME: trinity-${{ runner.os }}-${{ runner.arch }}-java-${{ matrix.jdk-version }}
         shell: bash
         run: |
           mv "build/image" "build/Trinity"
@@ -182,7 +182,7 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-jpackage
+          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-${{ runner.arch }}-jpackage
           path: build/jpackage/**
           retention-days: 10
           if-no-files-found: error
@@ -192,7 +192,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          RELEASE_NAME: trinity-${{ runner.os }}-java-${{ matrix.jdk-version }}
+          RELEASE_NAME: trinity-${{ runner.os }}-${{ runner.arch }}-java-${{ matrix.jdk-version }}
         shell: bash
         run: |
           if [[ "$RUNNER_OS" == "macOS" ]]; then
@@ -221,8 +221,9 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-          - macos-13 # Intel OSX (Not Supported)
           - macos-14 # ARM64 OSX
+          # - macos-13 # Intel OSX (TODO Not Supported)
+
 
     steps:
 
@@ -269,7 +270,7 @@ jobs:
         uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
-          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-native
+          name: java-${{ matrix.jdk-version }}-${{ runner.os }}-${{ runner.arch }}-native
           path: build/gluonfx/**/trinity*
           retention-days: 10
           if-no-files-found: error
@@ -279,7 +280,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          RELEASE_NAME: trinity-${{ runner.os }}-java-${{ matrix.jdk-version }}
+          RELEASE_NAME: trinity-${{ runner.os }}-${{ runner.arch }}-java-${{ matrix.jdk-version }}
         shell: bash
         run: |
           if [[ "$RUNNER_OS" == "macOS" ]]; then
