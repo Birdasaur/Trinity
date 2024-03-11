@@ -96,6 +96,19 @@ jobs:
           sudo apt-get install --yes --no-install-recommends libasound2-dev libavcodec-dev libavformat-dev libavutil-dev libfreetype6-dev
           sudo apt-get install --yes --no-install-recommends libgl-dev libglib2.0-dev libgtk-3-dev libpango1.0-dev libx11-dev libxtst-dev zlib1g-dev
 
+      # Setup CL, msbuild, etc.
+      - name: Windows Only - Enable Windows Developer Command Prompt
+        uses: ilammy/msvc-dev-cmd@v1.13.0
+        if: runner.os == 'Windows'
+        with:
+          arch: x64
+
+      - name: Set Up JDK ${{ matrix.jdk-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.jdk-version }}
+          distribution: 'temurin'
+
       - name: Set Up GraalVM ${{ matrix.jdk-version }}
         uses: graalvm/setup-graalvm@v1
         with:
