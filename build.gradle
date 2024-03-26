@@ -208,7 +208,7 @@ gluonfx {
         mainClassName = mainClassJarLauncher
     }
     target = "host"
-    javafxStaticSdkVersion = "$fxVersion"
+//    javafxStaticSdkVersion = "$fxVersion"
 }
 
 // </editor-fold>
