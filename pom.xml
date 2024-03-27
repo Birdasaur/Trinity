@@ -45,6 +45,7 @@
         <zeromq.jeromq.version>0.6.0</zeromq.jeromq.version>
         <jackson.version>2.16.1</jackson.version>
         <sarxos.webcam.capture.version>0.3.12</sarxos.webcam.capture.version>
+        <org.jflac.jflac-codec.version>1.5.2</org.jflac.jflac-codec.version>
         <slf4j.version>2.0.12</slf4j.version>
         <license.organizationName>The Johns Hopkins University Applied Physics Laboratory LLC</license.organizationName>
         <license.licenceFile>LICENSE.md</license.licenceFile>
@@ -147,6 +148,11 @@
             <artifactId>webcam-capture</artifactId>
             <version>${sarxos.webcam.capture.version}</version>
         </dependency>
+        <dependency>
+          <groupId>org.jflac</groupId>
+          <artifactId>jflac-codec</artifactId>
+          <version>${org.jflac.jflac-codec.version}</version>
+        </dependency>
         <!-- Enforce slf4j-api version across dependencies (although we're using JUL) -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -154,9 +160,30 @@
             <version>${slf4j.version}</version>
         </dependency>
     </dependencies>
-    <build>
-
+    <reporting>
         <plugins>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>9.0.9</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+            </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
